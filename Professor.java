@@ -3,11 +3,11 @@ public class Professor extends Usuario {
         super(id, nome, TipoUsuario.PROFESSOR);
     }
 
-    public Atividade associarTarefa(int disciplinaId, double nota, double peso, TipoAtividade tipo){
-        return Atividade.criar(disciplinaId, nota, peso, tipo);
+    public Tarefa associarTarefa(int disciplinaId, double nota, double peso, TipoTarefa tipo){
+        return Tarefa.criar(disciplinaId, nota, peso, tipo);
     }
 
-    public void editarPeso(int atividadeId, double novoPeso){
-        Atividade.editarPeso(atividadeId, novoPeso);
+    public void editarPeso(int TarefaId, double novoPeso){
+        Tarefa.editarPeso(tarefaId, novoPeso);
     }
 }

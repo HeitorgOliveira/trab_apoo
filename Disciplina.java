@@ -3,12 +3,11 @@ public class Disciplina {
     private String codigo;
     private ArrayList<Tarefa> listaTarefas;
 
+    // Getters e setters gerados pelo Copilot
     public String getNome() {
         return nome;
     }
 
-
-    // Getters e setters gerados pelo Copilot
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -35,12 +34,12 @@ public class Disciplina {
         this.listaTarefas = new ArrayList<>();
     }
 
-    public void incluirAtividade(Tarefa tarefa){
+    public void incluirTarefa(Tarefa tarefa){ 
         this.listaTarefas.add(tarefa);
         tarefa.setDisciplina(this);
     }
 
-    public double calcularMediaPorTipo(TipoAtividade tipo){
+    public double calcularMediaPorTipo(TipoTarefa tipo){
         double somaNotas = 0.0;
         double somaPesos = 0.0;
 
