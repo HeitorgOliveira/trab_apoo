@@ -1,4 +1,5 @@
 import sqlite3
+from conexao_bd import logar_adm
 from administrador import Admin
 
 def cadastrar():
@@ -9,7 +10,12 @@ def cadastrar():
         print("\n[Erro] administrador não encontrado!")
         return
 
-    print(f"\nAdministrador {admin.nome} validado!")
+    senha = input(f"\nAdministrador {admin.nome} digite sua senha: ")
+    if logar_adm(admin.id, senha):
+        print(f"-> Administrador {admin.nome} validado!")
+    else:
+        print(f"[Erro] senha inválida")
+        return
 
     nome = input("\nDigite o nome da disciplina: ")
     cod = input("Digite o código da disciplina: ")
@@ -17,7 +23,7 @@ def cadastrar():
 
     admin.cadastrarDisciplina(nome, cod, id_prof)
 
-def print_disciplinas():
+def printDisciplinas():
     conn = sqlite3.connect("db.sqlite")
     cursor = conn.cursor()
 
@@ -34,7 +40,7 @@ def print_disciplinas():
 
     conn.close()
 
-def print_users():
+def printUsers():
     conn = sqlite3.connect("db.sqlite")
     cursor = conn.cursor()
 
@@ -66,9 +72,9 @@ def main():
             case "2":
                 None # Editar disciplina
             case "3":
-                print_disciplinas()
+                printDisciplinas()
             case "4":
-                print_users()
+                printUsers()
             case "0":
                 print("Saindo...")
                 break

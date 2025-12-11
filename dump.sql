@@ -14,7 +14,6 @@ CREATE TABLE Tarefa (
     id_disciplina INTEGER NOT NULL,
     FOREIGN KEY (id_disciplina) REFERENCES Disciplina(id)
 );
-
 CREATE TABLE IF NOT EXISTS "Relac_Entrega" (
 	"id"	INTEGER NOT NULL,
 	"id_aluno"	INTEGER NOT NULL,
@@ -25,12 +24,6 @@ CREATE TABLE IF NOT EXISTS "Relac_Entrega" (
 	PRIMARY KEY("id" AUTOINCREMENT),
 	FOREIGN KEY("id_aluno") REFERENCES "Usuario"("id")
 );
-
-INSERT INTO Usuario (id, nome, tipo, senha) VALUES (1, '[admin_padrão] Maria', 'Admin', 'senha');
-INSERT INTO Usuario (id, nome, tipo, senha) VALUES (2, '[admin_padrão] João', 'Admin', 'senha');
-INSERT INTO Usuario (id, nome, tipo, senha) VALUES (3, '[professor_padrão] Lucas', 'Prof', 'senha');
-INSERT INTO Usuario (id, nome, tipo, senha) VALUES (4, '[aluno_padrão] Marcos', 'Alum', 'senha');
-
 CREATE TABLE IF NOT EXISTS "Disciplina" (
 	"id"	INTEGER,
 	"nome"	TEXT NOT NULL,
@@ -40,5 +33,11 @@ CREATE TABLE IF NOT EXISTS "Disciplina" (
 	FOREIGN KEY("id_professor") REFERENCES "Usuario"("id"),
 	PRIMARY KEY("id")
 );
+
+INSERT INTO Usuario (id, nome, tipo, senha) VALUES (1, '[admin_padrão "Maria"]', 'Admin', '1234');
+INSERT INTO Usuario (id, nome, tipo, senha) VALUES (2, '[admin_padrão "João"]', 'Admin', '5678');
+INSERT INTO Usuario (id, nome, tipo, senha) VALUES (3, '[professor_padrão "Lucas"]', 'Prof', '1111');
+INSERT INTO Usuario (id, nome, tipo, senha) VALUES (4, '[aluno_padrão "Marcos"]', 'Alum', '2222');
+
 DELETE FROM sqlite_sequence;
 COMMIT;
