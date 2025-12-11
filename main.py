@@ -23,6 +23,32 @@ def cadastrar():
 
     admin.cadastrarDisciplina(nome, cod, id_prof)
 
+def editar():
+    id_professor = int(input("Digite o id do administrador: "))
+    admin = Admin.carregarAdminPorId(id_professor)
+    if admin is None:
+        print("\n[Erro]: Admin não encontrado ou o professor não é admin")
+        return
+    senha = input(f"\nAdministrador {admin.nome} digite sua senha: ")
+    if logar_adm(admin.id, senha):
+        print(f"-> Administrador {admin.nome} validado!")
+    else:
+        print(f"[Erro] senha inválida")
+        return
+    
+    opcao = 0
+    while opcao == 0:
+        nome = input("Digite o nome do professor: ")
+        codigo = input("Digite o código da disciplina: ")
+        id_professor = int(input("Digite o id do professor: "))
+
+        print(f"\n\n------ INFORMAÇÕES -------\nNome: {nome}\nCodigo: {codigo}\nID do professor: {id_professor}")
+        opcao = int(input("Tem certeza?\n[1] Sim\n[0] Não\n\n"))  
+
+
+    Admin.editarDisciplina(nome=nome, codigo=codigo, id_professor=id_professor)
+    
+
 def printDisciplinas():
     conn = sqlite3.connect("db.sqlite")
     cursor = conn.cursor()
@@ -68,9 +94,12 @@ def main():
         op = input("\nSelecione uma das opções acima: ")
         match op:
             case "1":
+                print("\n----- Cadastrar disciplinas -----")
                 cadastrar()
             case "2":
-                None # Editar disciplina
+                print("\n----- Editar disciplinas -----")
+
+                editar() # Editar disciplina
             case "3":
                 printDisciplinas()
             case "4":
