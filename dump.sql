@@ -35,9 +35,9 @@ CREATE TABLE IF NOT EXISTS "Disciplina" (
 );
 
 INSERT INTO Usuario (id, nome, tipo, senha) VALUES (1, '[admin_padrão "Maria"]', 'Admin', '1234');
-INSERT INTO Usuario (id, nome, tipo, senha) VALUES (2, '[admin_padrão "João"]', 'Admin', '5678');
-INSERT INTO Usuario (id, nome, tipo, senha) VALUES (3, '[professor_padrão "Lucas"]', 'Prof', '1111');
-INSERT INTO Usuario (id, nome, tipo, senha) VALUES (4, '[aluno_padrão "Marcos"]', 'Alum', '2222');
+INSERT INTO Usuario (id, nome, tipo, senha) VALUES (2, '[professor_padrão "Lucas"]', 'Prof', '1111');
+INSERT INTO Usuario (id, nome, tipo, senha) VALUES (3, '[professor_padrão "Ana"]', 'Prof', '2222');
+INSERT INTO Usuario (id, nome, tipo, senha) VALUES (4, '[aluno_padrão "Marcos"]', 'Alum', '3333');
 
 DELETE FROM sqlite_sequence;
 COMMIT;

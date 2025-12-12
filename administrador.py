@@ -1,5 +1,6 @@
 import sqlite3
 from usuarioGeral import UsuarioGeral
+from disciplina import Disciplina
 
 class Admin(UsuarioGeral):
     def __init__(self, nome: str, id: int):
@@ -53,58 +54,53 @@ class Admin(UsuarioGeral):
         conn.close()
     
     def editarDisciplina(self, nome=None, codigo=None, id_professor=None):
-        if codigo == None:
-            print("ERRO: Precisa informar o código da disciplina")
-            return None
-            
-        if nome == None and id_professor == None:
-            print("Informar pelo menos nome ou o id do professor a ser alterado")
-            return None
-        
-        conn = sqlite3.connect("db.sqlite")
-        cursor = conn.cursor()
+        # Busca a disciplina no vetor de disciplinas da classe mãe Usuario Geral
+        disciplina = None
+        for d in self.disciplinas:
+            if d.codigo == codigo:
+                disciplina = d
+                break
 
-        cursor.execute("SELECT * FROM Disciplinas WHERE codigo = ?", (codigo))
-        disciplina = cursor.fetchone()
-
-        if not disciplina:
-            print(f"[ERRO]: Disciplina com o código {codigo} não econtrada")
-            conn.close()
+        if disciplina is None:
+            print(f"[ERRO] Disciplina com código '{codigo}' não encontrada")
             return
-        
-        print(disciplina)
-        return 
 
-        if nome != None:
-            self.disciplinas[codigo].nome = nome
+        # Alterações na disciplina
+        if nome.strip() != "":
+            disciplina.nome = nome
 
-        if id_professor != None:
-            self.disciplinas[codigo].id = id_professor
+        if id_professor is not None:
+            disciplina.id_prof = id_professor
 
         conn = sqlite3.connect("db.sqlite")
         cursor = conn.cursor()
 
-        # Verifica se o professor existe
-        cursor.execute("SELECT * FROM Usuario WHERE id = ? AND tipo = 'Prof'", (id_professor,))
-        prof = cursor.fetchone()
+        if id_professor is not None:
+            cursor.execute("SELECT id FROM Usuario WHERE id = ? AND tipo = 'Prof'", (id_professor,))
+            if cursor.fetchone() is None:
+                print("[ERRO] Professor não encontrado")
+                conn.close()
+                return
 
-        if not prof:
-            print("\n[Erro] professor não encontrado")
-            conn.close()
-            return
-
+        # Atualiza o BD
         try:
-            cursor.execute("""
-                UPDATE Disciplina SET nome = ? AND id_professor = ? WHERE id = ?
-            """, (self.disciplinas[codigo].nome, self.disciplinas[codigo].id, codigo))
+            cursor.execute(
+                """
+                UPDATE Disciplina
+                SET nome = ?, id_professor = ?
+                WHERE codigo = ? AND id_admin = ?
+                """,
+                (disciplina.nome, disciplina.id_prof, codigo, self.id)
+            )
 
             conn.commit()
-            print(f"Disciplina {codigo} editada com sucesso!")
+            print(f"Disciplina '{codigo}' editada com sucesso!")
 
         except Exception as e:
-            print(f"Erro: {e}")
-
-        None
+            print("Erro ao atualizar disciplina:", e)
+        
+        finally:
+            conn.close()
 
     def excluirDisciplina():
         None

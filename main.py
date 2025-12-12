@@ -2,53 +2,30 @@ import sqlite3
 from conexao_bd import logar_adm
 from administrador import Admin
 
-def cadastrar():
-    id_admin = int(input("Digite o ID do administrador: "))
-    admin = Admin.carregarAdminPorId(id_admin)
-
-    if admin is None:
-        print("\n[Erro] administrador não encontrado!")
-        return
-
-    senha = input(f"\nAdministrador {admin.nome} digite sua senha: ")
-    if logar_adm(admin.id, senha):
-        print(f"-> Administrador {admin.nome} validado!")
-    else:
-        print(f"[Erro] senha inválida")
-        return
-
+def cadastrar(admin):
     nome = input("\nDigite o nome da disciplina: ")
     cod = input("Digite o código da disciplina: ")
-    id_prof = input("Digite o id do professor responsável pela disciplina: ")
-
+    id_prof = int(input("Digite o id do professor responsável pela disciplina: "))
     admin.cadastrarDisciplina(nome, cod, id_prof)
 
-def editar():
-    id_professor = int(input("Digite o id do administrador: "))
-    admin = Admin.carregarAdminPorId(id_professor)
-    if admin is None:
-        print("\n[Erro]: Admin não encontrado ou o professor não é admin")
-        return
-    senha = input(f"\nAdministrador {admin.nome} digite sua senha: ")
-    if logar_adm(admin.id, senha):
-        print(f"-> Administrador {admin.nome} validado!")
-    else:
-        print(f"[Erro] senha inválida")
-        return
-    
+def editar(admin):
+    codigo = input("Digite o código da disciplina a ser alterada: ")
+            
     opcao = 0
     while opcao == 0:
-        nome = input("Digite o nome do professor: ")
-        codigo = input("Digite o código da disciplina: ")
-        id_professor = int(input("Digite o id do professor: "))
+        print("* Digite apenas o que quiser editar, para pular digite [enter] *")
+        nome = input("Digite o novo nome da disciplina: ")
+        entrada_prof = input("Digite o id do novo professor: ")
+        if entrada_prof.strip() == "":
+            id_professor = None
+        else:
+            id_professor = int(entrada_prof)
 
-        print(f"\n\n------ INFORMAÇÕES -------\nNome: {nome}\nCodigo: {codigo}\nID do professor: {id_professor}")
+        print(f"\n\n------ INFORMAÇÕES A SEREM ATUALIZADAS -------\nNome: {nome}\nID do professor: {id_professor}")
         opcao = int(input("Tem certeza?\n[1] Sim\n[0] Não\n\n"))  
 
-
-    Admin.editarDisciplina(nome=nome, codigo=codigo, id_professor=id_professor)
+    admin.editarDisciplina(nome=nome, codigo=codigo, id_professor=id_professor)
     
-
 def printDisciplinas():
     conn = sqlite3.connect("db.sqlite")
     cursor = conn.cursor()
@@ -83,8 +60,31 @@ def printUsers():
 
     conn.close()
 
+def login():
+    id_admin = int(input("Digite o ID do administrador: "))
+    admin = Admin.carregarAdminPorId(id_admin)
+
+    if admin is None:
+        print("\n[Erro] administrador não encontrado!")
+        return None
+
+    senha = input(f"\nAdministrador {admin.nome} digite sua senha: ")
+    if logar_adm(admin.id, senha):
+        print(f"-> Administrador {admin.nome} validado!")
+    else:
+        print(f"[Erro] senha inválida")
+        return None
+
+    return admin
+
 def main():
+    admin = None
+    while admin is None:
+        admin = login()
+
     while True:
+        admin.carregarDisciplinas() # Sempre atualiza pois pode haver cadastro de novas disciplinas
+
         print("\n----- Gerenciamento de disciplinas -----")
         print("[1] - Cadastrar disciplina")
         print("[2] - Editar disciplina")
@@ -95,11 +95,10 @@ def main():
         match op:
             case "1":
                 print("\n----- Cadastrar disciplinas -----")
-                cadastrar()
+                cadastrar(admin)
             case "2":
                 print("\n----- Editar disciplinas -----")
-
-                editar() # Editar disciplina
+                editar(admin) 
             case "3":
                 printDisciplinas()
             case "4":
