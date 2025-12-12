@@ -34,6 +34,14 @@ CREATE TABLE IF NOT EXISTS "Disciplina" (
 	PRIMARY KEY("id")
 );
 
+CREATE TABLE IF NOT EXISTS "Inscricao" (
+	"id_aluno" INTEGER NOT NULL,
+	"id_disciplina" INTEGER NOT NULL,
+	FOREIGN KEY("id_aluno") REFERENCES "Usuario"("id"),
+	FOREIGN KEY("id_disciplina") REFERENCES "Disciplina"("id"),
+	PRIMARY KEY("id_aluno","id_disciplina")
+);
+
 INSERT INTO Usuario (id, nome, tipo, senha) VALUES (1, '[admin_padrão "Maria"]', 'Admin', '1234');
 INSERT INTO Usuario (id, nome, tipo, senha) VALUES (2, '[professor_padrão "Lucas"]', 'Prof', '1111');
 INSERT INTO Usuario (id, nome, tipo, senha) VALUES (3, '[professor_padrão "Ana"]', 'Prof', '2222');
