@@ -38,6 +38,7 @@ INSERT INTO Usuario (id, nome, tipo, senha) VALUES (1, '[admin_padrão "Maria"]'
 INSERT INTO Usuario (id, nome, tipo, senha) VALUES (2, '[professor_padrão "Lucas"]', 'Prof', '1111');
 INSERT INTO Usuario (id, nome, tipo, senha) VALUES (3, '[professor_padrão "Ana"]', 'Prof', '2222');
 INSERT INTO Usuario (id, nome, tipo, senha) VALUES (4, '[aluno_padrão "Marcos"]', 'Alum', '3333');
+INSERT INTO Disciplina (id, nome, codigo, id_professor, id_admin) VALUES (1, 'teste_nome', 'teste_codigo', 1, 1);
 
 DELETE FROM sqlite_sequence;
 COMMIT;

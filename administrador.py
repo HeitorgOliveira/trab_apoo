@@ -57,6 +57,7 @@ class Admin(UsuarioGeral):
         # Busca a disciplina no vetor de disciplinas da classe mãe Usuario Geral
         disciplina = None
         for d in self.disciplinas:
+            print(d.codigo, codigo)
             if d.codigo == codigo:
                 disciplina = d
                 break
