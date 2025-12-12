@@ -8,6 +8,8 @@ class Aluno (UsuarioAcadem):
         super().__init__(nome, id)
         self.entregas:List[Entrega] = []
 
+    # Função adicional para exemplificar a forma como pensamos, onde 
+    # o próprio aluno se inscreve na disciplina
     def inscreverEmDisciplina(self, codigo_disciplina:str):
         conn = sqlite3.connect("db.sqlite")
         cursor = conn.cursor()

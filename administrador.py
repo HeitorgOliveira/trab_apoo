@@ -30,10 +30,17 @@ class Admin(UsuarioGeral):
         conn = sqlite3.connect("db.sqlite")
         cursor = conn.cursor()
 
-        # Verifica se o professor existe de novo
+        if not nome or nome.strip() == "":
+            print("\n[Erro] Nome da disciplina não pode ser vazio")
+            return
+
+        if not codigo or codigo.strip() == "":
+            print("\n[Erro] Código da disciplina não pode ser vazio")
+            return
+
+        # Verifica se o professor existe
         cursor.execute("SELECT * FROM Usuario WHERE id = ? AND tipo = 'Prof'", (id_professor,))
         prof = cursor.fetchone()
-
         if not prof:
             print("\n[Erro] professor não encontrado")
             conn.close()

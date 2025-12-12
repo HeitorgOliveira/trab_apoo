@@ -11,5 +11,5 @@ class Professor(UsuarioAcadem):
         None
     
     def associarTarefa():
-        # Deve chamar o métodos da classe disciplina "criarTarefa"
+        # Deve chamar o método da classe disciplina "criarTarefa"
         None

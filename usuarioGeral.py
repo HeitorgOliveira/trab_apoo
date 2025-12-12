@@ -7,6 +7,7 @@ class UsuarioGeral:
         self.id = id
         self.disciplinas:list[Disciplina] = []
     
+    # Atualiza a lista de disciplinas de acordo com o banco de dados
     def carregarDisciplinas(self):
         conn = sqlite3.connect("db.sqlite")
         cursor = conn.cursor()
@@ -20,10 +21,10 @@ class UsuarioGeral:
         linhas = cursor.fetchall()
         conn.close()
 
-        self.disciplinas = []  # agora é LISTA
+        self.disciplinas = [] 
 
         for id_disc, nome, codigo, id_prof, id_adm in linhas:
             disciplina = Disciplina(nome, codigo, id_prof, id_adm)
-            self.disciplinas.append(disciplina)  # adiciona no vetor
+            self.disciplinas.append(disciplina)  
 
 
