@@ -36,3 +36,6 @@ class Aluno (UsuarioAcadem):
             print("\n[Erro] ao inscrever na disciplina:", e)
 
         conn.close()
+    
+    def consultarMedias():
+        None

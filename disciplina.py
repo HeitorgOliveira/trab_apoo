@@ -12,16 +12,7 @@ class Disciplina:
         id_adm=id_adm
         self.lista_tarefas:list['Tarefa']=[] # Importa a classe e o Enum
 
-    def criarTarefa(self, tarefa: 'Tarefa') -> None:
-        # Talvez remover (o que está comentado)???
-        # self.lista_tarefas.append(tarefa)
-        # tarefa.disciplina = self 
-        None
-    
-    def calcularMediaTipoTarefa():
-        None
-    
-    def calcularMediaFinal():
+    def criarTarefa():
         None
 
     def editarTarefa():
